@@ -24,6 +24,7 @@ for title,image,desc,rate,cate in zip(titles,images,descs,rates,cates):
     #print(data)
     info.append(data)
 
+#判断评分大于3的
 for i in info:
         if float(i['rate'])>3:
             print(i['title'],i['cate'])

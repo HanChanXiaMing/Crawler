@@ -4,7 +4,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-url = 'https://cn.tripadvisor.com/Attractions-g60763-Activities-New_York_City_New_York.html'
+url = ''
 url_saves = ''
 
 # 伪造登陆信息
@@ -15,6 +15,7 @@ headers = {
 def get_attractions(url,data=None):
     wb_data = requests.get(url)
     soup = BeautifulSoup(wb_data.text,'lxml')
+    # print(soup)
     titles = soup.select('')    # 标题
     imgs = soup.select('')      # 图片
     cates = soup.select('')     # 分类
@@ -25,7 +26,7 @@ def get_attractions(url,data=None):
             'img'   :imgs.get(),
             'cate'  :list(cate.stripped_strings)
         }
-        print(data0
+        print(data)
 
 
 def get_favs(url,data=None):

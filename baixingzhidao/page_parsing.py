@@ -6,6 +6,7 @@ import pymongo
 client = pymongo.MongoClient('localhost',27017)
 cheshi = client['ceshi']    # 创建一个库
 url_list = cheshi['url_list3']  # 创建一个表
+item_info = cheshi['item_info4']
 url_host = 'http://communityaction.org.cn'
 
 # spider 1
@@ -21,6 +22,21 @@ def get_links_from(channel,pages):  # channel 是类的html   pages 是当前类
         url_list.insert_one({'url':url})
         print(url)
 
+# spider 2
+# 获取各页里的信息
+def get_item_info(url):
+        wb_data = requests.get(url)
+        soup = BeautifulSoup(wb_data.text,'lxml')
+        title = soup.select('h1.entry-title')[0].text               # 标题
+        data = soup.select('div.dwqa-meta span.dwqa-date')[0].text  # 提问时间
+        #Answer_time = soup.select('header span.dwqa-date a').text        # 未被采用回答时间
+        #if soup.find('div','acceptAnswer'):                         # 回答是否采用
+        best_time = soup.select('div.acceptAnswer div span:nth-of-type(2)')[0].text # 采用回答时间
+
+        #item_info.insert_one({'title':title,'data:'data,'best_time:'best_time})
+        print({'title':title,'data:'data,'best_time:'best_time})
+
+get_item_info('http://communityaction.org.cn/question/265604.html')
 get_links_from('http://communityaction.org.cn/page-100',1)
 
 '''
